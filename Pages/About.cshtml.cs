@@ -7,6 +7,11 @@ namespace ASP.NETCoreWebAppTest.Pages.Shared
     {
         public void OnGet()
         {
+
+
+
+
+            
         }
     }
 }
