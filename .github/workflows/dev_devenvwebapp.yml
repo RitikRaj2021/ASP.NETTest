@@ -1,31 +1,31 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - ASPNETTesWebApp
+name: Build and deploy ASP.Net Core app to Azure Web App - devEnvWebApp
 
 on:
   push:
     branches:
-      - main
+      - dev
   workflow_dispatch:
 
 jobs:
   run-lint:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v3
-          with:
-            # Full git history is needed to get a proper list of changed files within `super-linter`
-            fetch-depth: 0
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout code
+            uses: actions/checkout@v3
+            with:
+              # Full git history is needed to get a proper list of changed files within `super-linter`
+              fetch-depth: 0
 
-        - name: Lint Code Base
-          uses: github/super-linter@v4
-          env:
-            VALIDATE_ALL_CODEBASE: false
-            DEFAULT_BRANCH: "master"
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            VALIDATE_YAML: false
+          - name: Lint Code Base
+            uses: github/super-linter@v4
+            env:
+              VALIDATE_ALL_CODEBASE: false
+              DEFAULT_BRANCH: "master"
+              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              VALIDATE_YAML: false
   build:
     runs-on: windows-latest
     needs: run-lint
@@ -50,7 +50,6 @@ jobs:
         with:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
-          
 
   deploy:
     runs-on: windows-latest
@@ -69,7 +68,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'ASPNETTesWebApp'
+          app-name: 'devEnvWebApp'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6C3883C3A34442F68A71C2896840613E }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7BF109C65D7E410CBC60E5F04B816E14 }}
           package: .
